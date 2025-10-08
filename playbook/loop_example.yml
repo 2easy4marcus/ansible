@@ -1,0 +1,21 @@
+---
+- name: Loop example
+  hosts: all
+  gather_facts: no
+  vars:
+    mylist:
+      - "one"
+      - "two"
+      - "three"
+  tasks:
+    - name: Loop example
+      ansible.builtin.debug:
+        msg: "This is loop example {{ item }}"
+      loop: "{{ mylist }}"
+
+    - name: create dir 
+      file:
+        path: "~/automation/{{ item }}"
+        state: directory
+      loop: "{{mylist}}"
+        

@@ -1,0 +1,19 @@
+---
+- name: Multiple conditions Example
+  hosts: localhost
+  gather_facts: yes
+  vars:
+    check_memory: true
+  tasks:
+    - name: check os and memory
+      debug:
+        msg: "This is debian based system with more than 1GB of memory "
+      when: 
+        - ansible_os_family == "Debian" #this is one variable of much more that ansible can gather from the host device by using the gather_facts builtin module
+        - ansible_memtotal_mb > 1024
+        - check_memory | bool
+
+    - name: Print System information
+      debug:
+        msg: "OS: {{ansible_distribution}}, memory:{{ansible_memtotal_mb}} MB"
+      when: ansible_distribution == "Ubuntu" and ansible_memtotal_mb < 100000

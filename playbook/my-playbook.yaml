@@ -1,0 +1,14 @@
+---
+- name: Conditional example
+  hosts: web
+  gather_facts: yes
+  tasks:
+    - name: Check os familly
+      debug:
+        msg: "This is a Debian-based system"
+      when: ansible_os_family == "Debian"
+
+    - name: check os familly alternative 
+      debug:
+        msg: "this is no a debian based system"
+      when: ansible_os_family != "Debian"
