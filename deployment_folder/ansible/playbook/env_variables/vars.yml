@@ -1,0 +1,27 @@
+# --- workdir ---
+workdir: "deployment_test"
+
+# --- General paths ---
+source_dir: "~/automation/deployment_test"
+target_dir: "{{ ansible_env.HOME }}/automation/{{workdir}}"
+backup_root: "{{ ansible_env.HOME }}/automation/backup"
+# --- Backup settings ---
+# Number of backups to keep
+retention_keep: 5
+
+# Excluded subfolders inside the deployment directory
+backup_excludes:
+  - "{{ target_dir }}/logs"
+  - "{{ target_dir }}/.cache"
+  - "{{ target_dir }}/tmp"
+
+
+# Symlink for the latest backup archive
+stable_link: "{{ backup_root }}/stable"
+latest_link: "{{ backup_root }}/latest"
+#identify the version of the rollback archive
+rollback_version: "{{ rollback_version | default('stable') }}"
+
+# ---  environment ---
+domain_name: "{{ DOMAIN | default('edge-node.prekit.ch') }}"
+# machines_ip: "{{ virtual-factory | default('100.64.0.14') }}"

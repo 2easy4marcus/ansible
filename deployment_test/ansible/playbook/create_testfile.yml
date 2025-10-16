@@ -1,0 +1,17 @@
+---
+- hosts: aycer
+  tasks:
+
+  - name: check if the docker and docker compose is installed 
+    ansible.builtin.file:
+      path: /home/admins/admin/message3.txt
+      state: touch
+      line : "Hallo von Ansible"
+
+
+  # - name: echo a phrase to the file 
+  #   shell: |
+  #     echo "Hallo von Ansible" > /home/admins/admin/message3.txt
+
+       
+

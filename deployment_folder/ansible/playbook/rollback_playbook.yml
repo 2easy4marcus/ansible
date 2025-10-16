@@ -1,0 +1,45 @@
+---
+- name: Rollback composable-edge-node to last working backup
+  hosts: aycer
+  # become: yes
+  vars_files:
+    - env_variables/vars.yml
+
+  tasks:
+    - name: Stop running containers
+      community.docker.docker_compose_v2:
+        project_src: "{{ target_dir }}"
+        state: absent
+
+    - name: Check if stable backup exists
+      ansible.builtin.stat:
+        path: "{{ stable_link }}"
+      register: backup_check
+
+    - name: Fail if no backup is found
+      ansible.builtin.assert:
+        that:
+          - backup_check.stat.exists
+        fail_msg: "No stable backup found"
+        success_msg: "Stable backup found"
+
+    - name: Remove current deployment directory
+      ansible.builtin.file:
+        path: "{{ target_dir }}"
+        state: absent
+
+    - name: Extract stable backup archive
+      ansible.builtin.unarchive:
+        src: "{{ stable_link }}"
+        dest: "{{ target_dir | dirname }}"
+        remote_src: true
+
+    - name: Start containers
+      community.docker.docker_compose_v2:
+        project_src: "{{ target_dir }}"
+        state: present
+        project_name: prekit
+
+    - name: Confirm rollback completed
+      ansible.builtin.debug:
+        msg: "Rollback completed — restored from {{ stable_link }}"

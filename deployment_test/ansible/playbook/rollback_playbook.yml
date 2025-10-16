@@ -1,0 +1,44 @@
+---
+- name: Rollback composable-edge-node to last working backup
+  hosts: aycer
+  # become: yes
+  vars_files:
+    - env_variables/vars.yml
+
+  tasks:
+    # - name: Stop running containers
+    #   ansible.builtin.command: docker compose down
+    #   args:
+    #     chdir: "{{ deployment_root }}"
+
+
+   
+    - name: Check if stable backup exists
+      ansible.builtin.stat:
+        path: "{{ stable_link }}"
+      register: backup_check
+
+    - name: Fail if no backup is found
+      ansible.builtin.assert:
+        that:
+          - backup_check.stat.exists
+        fail_msg: "No stable backup found"
+        success_msg: "Stable backup found"
+
+
+    - name: Extract stable backup archive
+      ansible.builtin.unarchive:
+        src: "{{ stable_link }}"
+        dest: "{{ ansible_env.HOME }}/automation/deployment_folder"
+        remote_src: true
+        extra_opts: [--strip-components=1]
+
+    - name: Start containers
+      ansible.builtin.shell:
+       docker compose up -d --remove-orphans
+      args:
+        chdir: "{{ ansible_env.HOME }}/automation/deployment_folder"
+
+    - name: Confirm rollback completed
+      ansible.builtin.debug:
+        msg: "Rollback completed — restored from {{ stable_link }}"

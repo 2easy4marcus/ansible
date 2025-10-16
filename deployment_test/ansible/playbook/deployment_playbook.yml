@@ -1,0 +1,111 @@
+---
+- name: Deployment of Composable Edge Node
+  hosts: aycer
+  # become: yes
+  gather_facts: yes
+  vars_files:
+    - env_variables/vars.yml
+
+  tasks:
+    - name: Check for Docker installation
+      ansible.builtin.command: docker --version
+      register: docker_version
+      ignore_errors: true
+
+    - name: Playbook canceled if Docker is not installed
+      ansible.builtin.assert:
+        that:
+          - docker_version.rc == 0
+        fail_msg: "Docker is not installed"
+        success_msg: "Docker is installed"
+
+    - name: Check if {{workdir}} directory exists
+      ansible.builtin.stat:
+        path: "{{ target_dir }}"
+      register: workdir_check
+
+    - name: Ensure backup directory exists
+      ansible.builtin.file:
+        path: "{{ backup_root }}"
+        state: directory
+        mode: '0750'
+
+    # - name: Create {{workdir}} directory if missing
+    #   ansible.builtin.file:
+    #     path: "{{ target_dir }}"
+    #     state: directory
+    #     mode: '0755'
+    #   when: not {{workdir}}.stat.exists
+
+
+    - name: Copy/update deployment files from local to remote
+      ansible.builtin.copy:
+        src: "{{ source_dir }}"
+        dest: "{{ target_dir | dirname }}"
+        mode: '0755'
+    # - name: Execute 'make full' locally
+    #   ansible.builtin.shell: |
+    #     make full MACHINES={{ machines }} BUILD=false TARGET={{ ansible_host }} DEBUG=configdb,broker
+    #   args:
+    #     chdir: "/home/maj18/alpamayo/composable_edge_node_alt/deployment/compose"
+    #   delegate_to: localhost
+    #   run_once: true
+
+    # - name: Pull Docker images
+    #   ansible.builtin.command: docker compose pull
+    #   args:
+    #     chdir: "{{ target_dir }}"
+    #   register: docker_pull_result
+    #   when: docker_version.rc == 0
+
+    - name: Create a timestamp variable
+      ansible.builtin.set_fact:
+        timestamp: "{{ ansible_date_time.iso8601_basic_short }}"
+
+    - name: Archive {{workdir}} directory (pre-deployment backup)
+      ansible.builtin.archive:
+        path: "{{ target_dir }}"
+        dest: "{{ backup_root }}/{{workdir}}_{{ timestamp }}.tar.gz"
+        format: gz
+      when: workdir_check.stat.exists
+
+    - name: Update 'latest' symlink
+      ansible.builtin.file:
+        src: "{{ backup_root }}/{{workdir}}_{{ timestamp }}.tar.gz"
+        dest: "{{ backup_root }}/latest"
+        state: link
+        force: yes
+      when: workdir_check.stat.exists
+
+    - name: Count existing backups
+      ansible.builtin.shell: "ls -1 {{ backup_root }}/*.tar.gz 2>/dev/null | wc -l"
+      register: backup_count
+      changed_when: false
+
+    - name: Remove old backups if more than {{ retention_keep }}
+      ansible.builtin.shell: |
+        ls -1t {{ backup_root }}/*.tar.gz | tail -n +{{ retention_keep | int + 1 }} | xargs -r rm -f
+      when: backup_count.stdout | int > retention_keep | int
+
+
+    - name: Start Docker Compose
+      ansible.builtin.command: docker compose up -d
+      args:
+        chdir: "{{ target_dir }}"
+      register: docker_compose_result
+      when: docker_version.rc == 0
+    
+    - name: check if the deployment was successful
+      ansible.builtin.assert:
+        that:
+          - docker_compose_result.rc == 0
+        success_msg: "Deployment started successfully"
+        fail_msg: "Deployment failed — not updating latest backup"
+
+    - name: update the stable version
+      ansible.builtin.file:
+        src: "{{ backup_root }}/{{workdir}}_{{ timestamp }}.tar.gz"
+        dest: "{{ backup_root }}/stable"
+        state: link
+        force: yes
+      when: docker_compose_result.rc == 0

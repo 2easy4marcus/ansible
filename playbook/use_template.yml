@@ -1,0 +1,10 @@
+---
+- name: Use jinja2 template
+  hosts: localhost 
+  vars:
+    name: "Ansible learner"
+  tasks:
+    - name: create a file from template 
+      template:
+        src: ~/automation/templates/hello.j2
+        dest: /tmp/hello.txt

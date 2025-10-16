@@ -1,0 +1,52 @@
+step 1: connection and data-transfer
+1)create a file with ansible in "Edge-node"
+	>create an ansible playbook	
+	>teste dass VPN activ uns SSH-zugang korrekt
+	>bei till medledn wenn alles geklappt hat 
+-->in processs
+2)step 2:deplaoyment simulation
+	>
+
+
+
+Hinweise:
+-nach jedem schritt bei Till melden
+-auführliche dokumentation jede wichtige entscheidung 
+-ziel ist ein saubere nachvollziehbar und erweiterte struktur
+-human readable logs wurde erwüncht 
+
+0)prüfen ob docker vorhanden ist, prüfen ob docker compose vorhanden ist. failen wenn nicht. nicht installieren.
+1)composable-edge-node ordner muss existieren
+2) LOCAL BEI DIR: make full MACHINES=virtual-factory BUILD=false TARGET=100.64.0.6 DEBUG=configdb,broker
+3) dann auf der maschine selbst: im ordner composable-edge-node ein docker compose pull
+4) dann auf der maschine selbst: docker compose up 
+
+
+step3:
+1)variablen hinzufügen | shuen ich mal ob mid ansible_var auch funktioniert
+2)inventory als yaml datei 
+3)dokumentation - readme datei ########
+
+notiz
+1)the host shouldn't have any image with with the prekit images
+2)the host need to have the "yq" module installed or any yamml installed-> docker compse pull
+3)the pulling takes a long time 
+
+
+
+step4:
+1)env variable zu inventory addieren und teseten ob klappt 
+2)wenn es nicht klappt zurück zu till,wenn es klappt gibt er mir die richtige variablen die ich setzten STEP_LOG_LEVEL
+
+
+
+step5:
+1)rollback funktionalität in andere playbook
+2) composable edge node im backup directory coppieren (ich soll das setbst überlegen wie geht das mit detai ,ob ansible ein  besseres hat ....)
+
+ 
+step6:
+1)arguments zuom playbook commando addieren bsp:"ansible-playbook ansible/playbook/rollback_playbook.yml aycer
+2)awx installieren und probieren
+
+ 
