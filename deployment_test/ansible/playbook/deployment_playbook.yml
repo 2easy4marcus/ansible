@@ -5,8 +5,14 @@
   gather_facts: yes
   vars_files:
     - env_variables/vars.yml
-
+    - env_variables/{{ inventory_hostname }}.yml
+  
+  
   tasks:
+    - name: Print current host
+      ansible.builtin.debug:
+        msg: "Running on {{ inventory_hostname }}"
+
     - name: Check for Docker installation
       ansible.builtin.command: docker --version
       register: docker_version

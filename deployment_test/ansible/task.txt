@@ -49,4 +49,18 @@ step6:
 1)arguments zuom playbook commando addieren bsp:"ansible-playbook ansible/playbook/rollback_playbook.yml aycer
 2)awx installieren und probieren
 
+
+
+hinweis:
+--limit option in ansible 
+
+a single host → --limit aycer
+
+an entire group → --limit staging
+
+a pattern → --limit "aycer,staging"
+
+a wildcard → --limit "demo-*"
+
+or a negation → --limit '!production'
  
