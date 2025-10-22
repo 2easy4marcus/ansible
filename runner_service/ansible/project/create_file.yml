@@ -1,0 +1,14 @@
+---
+- hosts: alpamayo
+  tasks:
+
+  - name: check if the docker and docker compose is installed 
+    ansible.builtin.file:
+      path: "{{ansible_env.HOME}}/message3.txt"
+      state: touch
+
+
+  - name: Write a line to the file
+    ansible.builtin.lineinfile:
+      path: "{{ ansible_env.HOME }}/message3.txt"
+      line: "Hallo von Ansible"

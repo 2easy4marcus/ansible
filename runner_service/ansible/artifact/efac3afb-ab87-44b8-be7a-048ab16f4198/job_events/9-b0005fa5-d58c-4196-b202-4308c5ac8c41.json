@@ -1,0 +1,1 @@
+{"event": "verbose", "uuid": "b0005fa5-d58c-4196-b202-4308c5ac8c41", "counter": 9, "stdout": "\u001b[1;35mPython interpreter could change the meaning of that path. See\u001b[0m", "start_line": 7, "end_line": 8, "runner_ident": "efac3afb-ab87-44b8-be7a-048ab16f4198", "created": "2025-10-22T14:54:29.727907+00:00"}

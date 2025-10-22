@@ -1,0 +1,14 @@
+all:
+  children:
+    alpamayo:
+      hosts:
+        virtual-factory:
+          ansible_host: 100.64.0.14
+          ansible_user: admin
+
+        aycer:
+          ansible_host: 100.64.0.6
+          ansible_user: maj18
+          machines: virtual-factory
+          DOMAIN: aycer.com
+

@@ -1,0 +1,23 @@
+
+PLAY [alpamayo] ****************************************************************
+
+TASK [Gathering Facts] *********************************************************
+[0;32mok: [aycer][0m
+[1;35m[WARNING]: Platform linux on host virtual-factory is using the discovered[0m
+[1;35mPython interpreter at /usr/bin/python3.10, but future installation of another[0m
+[1;35mPython interpreter could change the meaning of that path. See[0m
+[1;35mhttps://docs.ansible.com/ansible-[0m
+[1;35mcore/2.16/reference_appendices/interpreter_discovery.html for more information.[0m
+[0;32mok: [virtual-factory][0m
+
+TASK [check if the docker and docker compose is installed] *********************
+[0;33mchanged: [aycer][0m
+[0;33mchanged: [virtual-factory][0m
+
+TASK [Write a line to the file] ************************************************
+[0;32mok: [aycer][0m
+[0;32mok: [virtual-factory][0m
+
+PLAY RECAP *********************************************************************
+[0;33maycer[0m                      : [0;32mok=3   [0m [0;33mchanged=1   [0m unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+[0;33mvirtual-factory[0m            : [0;32mok=3   [0m [0;33mchanged=1   [0m unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   

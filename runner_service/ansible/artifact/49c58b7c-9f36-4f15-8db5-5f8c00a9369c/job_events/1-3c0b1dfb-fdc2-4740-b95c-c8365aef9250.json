@@ -1,0 +1,1 @@
+{"event": "verbose", "uuid": "3c0b1dfb-fdc2-4740-b95c-c8365aef9250", "counter": 1, "stdout": "\u001b[0;31mERROR! the playbook: project/create_file.yml could not be found\u001b[0m", "start_line": 0, "end_line": 1, "runner_ident": "49c58b7c-9f36-4f15-8db5-5f8c00a9369c", "created": "2025-10-22T14:37:52.402208+00:00"}

@@ -1,0 +1,1 @@
+{"event": "verbose", "uuid": "4d8bf014-34f6-4153-98dd-32af06143825", "counter": 7, "stdout": "\u001b[1;35m[WARNING]: Platform linux on host virtual-factory is using the discovered\u001b[0m", "start_line": 5, "end_line": 6, "runner_ident": "b63b1716-c49c-4fa7-a277-19abe0eefd77", "created": "2025-10-22T14:54:07.068787+00:00"}
