@@ -1,0 +1,1 @@
+{"event": "verbose", "uuid": "f1739364-e74b-49da-811c-ec023045a8fe", "counter": 2, "stdout": "\u001b[0;31m[ERROR]: Specified inventory, host pattern and/or --limit leaves us with no hosts to target.\u001b[0m", "start_line": 1, "end_line": 2, "runner_ident": "33fab555-e65a-4592-af19-4213bc0668f3", "created": "2025-10-23T14:15:45.509956+00:00"}

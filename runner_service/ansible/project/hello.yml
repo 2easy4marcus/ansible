@@ -1,0 +1,8 @@
+---
+- name: Demo playbook
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Print message
+      ansible.builtin.debug:
+        msg: "Hello from {{ inventory_hostname }} (IP={{ ansible_host }}, user={{ ansible_user }}, custom_var={{ custom_var | default('NOT SET') }})"

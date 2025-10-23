@@ -1,0 +1,1 @@
+{"event": "verbose", "uuid": "272a5986-f08f-4742-9cd5-80c868b4d69f", "counter": 1, "stdout": "\u001b[0;31m[ERROR]: the playbook: /home/maj18/automation/runner_service/ansible/project does not appear to be a file\u001b[0m", "start_line": 0, "end_line": 1, "runner_ident": "8665f2c1-8fd6-4b91-a25d-06cd39e9bf9f", "created": "2025-10-23T12:49:41.190613+00:00"}

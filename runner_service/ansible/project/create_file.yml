@@ -4,7 +4,7 @@
 
   - name: check if the docker and docker compose is installed 
     ansible.builtin.file:
-      path: "{{ansible_env.HOME}}/message3.txt"
+      path: "{{ansible_env.HOME}}/{message_name}}.txt"
       state: touch
 
 

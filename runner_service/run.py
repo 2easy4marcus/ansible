@@ -1,6 +1,11 @@
 import os
 import ansible_runner
 
+from ansible.parsing.dataloader import DataLoader
+from ansible.inventory.manager import InventoryManager
+from ansible.vars.manager import VariableManager
+
+
 BASE_DIR = "/home/maj18/automation/runner_service/ansible"
 PROJECT_DIR = os.path.join(BASE_DIR, "project")
 INVENTORY_DIR = os.path.join(BASE_DIR, "inventory")
@@ -11,6 +16,13 @@ def get_resources():
     playbooks = [f for f in os.listdir(PROJECT_DIR) if f.endswith((".yml", ".yaml"))]
     inventories = [f for f in os.listdir(INVENTORY_DIR) if os.path.isfile(os.path.join(INVENTORY_DIR, f))]
     return {"playbooks": playbooks, "inventories": inventories}
+
+def create_inventory(inventory_name, groupe_name='all' ) :
+    loader = DataLoader()
+    inventory = InventoryManager(loader=loader, sources='INVENTORY_DIR')
+    variable_manager = VariableManager(loader=loader, inventory=inventory)
+    inventory.add_group()
+    inventory.add_host('demo host', group='demo')
 
 def parse_inventory(inventory_file, base_dir):
     path_to_inventory = os.path.join(base_dir, "inventory", inventory_file)
@@ -26,8 +38,11 @@ def execute_playbook(playbook, inventory, extravars=None):
         private_data_dir=BASE_DIR,
         playbook=playbook,
         inventory=inventory,
-        extravars=extravars or {},
+        extravars=extravars or {
+            "message_name": "testcase1"
+        },
         artifact_dir=ARTIFACT_DIR,
+        limit=virtual_factory
     )
     return {
         "status": runner.status,

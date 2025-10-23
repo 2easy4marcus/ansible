@@ -1,0 +1,8 @@
+all:
+  children:
+    demo_group:
+      hosts:
+        demo-host:
+          ansible_host: 127.0.0.1
+          ansible_user: maj18
+          custom_var: edge_node_A

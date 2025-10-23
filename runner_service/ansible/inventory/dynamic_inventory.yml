@@ -1,0 +1,100 @@
+all:
+  children:
+    alpamayo:
+      hosts:
+        virtual-factory:
+          ansible_host: 100.64.0.14
+          ansible_user: admin
+        aycer:
+          ansible_host: 100.64.0.6
+          ansible_user: maj18
+          ? !!python/object/new:ansible.module_utils._internal._datatag._AnsibleTaggedStr
+            args:
+            - machines
+            state: !!python/tuple
+            - null
+            - _ansible_tags_mapping: !!python/object/new:ansible.module_utils._internal._datatag._AnsibleTagsMapping
+                dictitems:
+                  ? &id001 !!python/name:ansible._internal._datatag._tags.Origin ''
+                  : !!python/object/new:ansible._internal._datatag._tags.Origin
+                    state:
+                    - /home/maj18/automation/runner_service/ansible/inventory/alpamayo.yml
+                    - null
+                    - 11
+                    - 11
+          : !!python/object/new:ansible.module_utils._internal._datatag._AnsibleTaggedStr
+            args:
+            - virtual-factory
+            state: !!python/tuple
+            - null
+            - _ansible_tags_mapping: !!python/object/new:ansible.module_utils._internal._datatag._AnsibleTagsMapping
+                dictitems:
+                  *id001: !!python/object/new:ansible._internal._datatag._tags.Origin
+                    state:
+                    - /home/maj18/automation/runner_service/ansible/inventory/alpamayo.yml
+                    - null
+                    - 11
+                    - 21
+                  ? &id002 !!python/name:ansible._internal._datatag._tags.TrustedAsTemplate ''
+                  : &id003 !!python/object/new:ansible._internal._datatag._tags.TrustedAsTemplate
+                    state: []
+          ? !!python/object/new:ansible.module_utils._internal._datatag._AnsibleTaggedStr
+            args:
+            - DOMAIN
+            state: !!python/tuple
+            - null
+            - _ansible_tags_mapping: !!python/object/new:ansible.module_utils._internal._datatag._AnsibleTagsMapping
+                dictitems:
+                  *id001: !!python/object/new:ansible._internal._datatag._tags.Origin
+                    state:
+                    - /home/maj18/automation/runner_service/ansible/inventory/alpamayo.yml
+                    - null
+                    - 12
+                    - 11
+          : !!python/object/new:ansible.module_utils._internal._datatag._AnsibleTaggedStr
+            args:
+            - aycer.com
+            state: !!python/tuple
+            - null
+            - _ansible_tags_mapping: !!python/object/new:ansible.module_utils._internal._datatag._AnsibleTagsMapping
+                dictitems:
+                  *id001: !!python/object/new:ansible._internal._datatag._tags.Origin
+                    state:
+                    - /home/maj18/automation/runner_service/ansible/inventory/alpamayo.yml
+                    - null
+                    - 12
+                    - 19
+                  *id002: *id003
+        demo-host-2:
+          ansible_host: 127.0.0.1
+          ansible_user: XXXXX
+          ? !!python/object/new:ansible.module_utils._internal._datatag._AnsibleTaggedStr
+            args:
+            - custom_var
+            state: !!python/tuple
+            - null
+            - _ansible_tags_mapping: !!python/object/new:ansible.module_utils._internal._datatag._AnsibleTagsMapping
+                dictitems:
+                  *id001: !!python/object/new:ansible._internal._datatag._tags.Origin
+                    state:
+                    - /home/maj18/automation/runner_service/ansible/inventory/alpamayo.yml
+                    - null
+                    - 16
+                    - 11
+          : !!python/object/new:ansible.module_utils._internal._datatag._AnsibleTaggedStr
+            args:
+            - edge_node_B
+            state: !!python/tuple
+            - null
+            - _ansible_tags_mapping: !!python/object/new:ansible.module_utils._internal._datatag._AnsibleTagsMapping
+                dictitems:
+                  *id001: !!python/object/new:ansible._internal._datatag._tags.Origin
+                    state:
+                    - /home/maj18/automation/runner_service/ansible/inventory/alpamayo.yml
+                    - null
+                    - 16
+                    - 23
+                  *id002: *id003
+    demo_group:
+      hosts:
+        demo-host: {}

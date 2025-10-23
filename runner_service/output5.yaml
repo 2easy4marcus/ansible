@@ -10,6 +10,7 @@ all:
           ansible_user: maj18
           machines: virtual-factory
           DOMAIN: aycer.com
-        demo-host-3:
-          ansible_host: 127.0.0.1
-          ansible_user: XXXXX
+        demo:
+          ansible_host: 192.168.1.100
+          ansible_user: admin
+          custom_var: some_value
